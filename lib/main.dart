@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quizzler/question.dart';
 
 void main() => runApp(const App());
 
@@ -28,18 +29,29 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   List<Icon> scoreKeeper = const [];
 
-  List<String> questions = const [
-    'You can lead a cow down stairs but not up stairs.',
-    'Approximately one quarter of human bones are in the feet.',
-    'A slug\'s blood is green.',
+  List<Question> questions = [
+    Question(
+      text: 'You can lead a cow down stairs but not up stairs.',
+      correctAnswer: true,
+    ),
+    Question(
+      text: 'Approximately one quarter of human bones are in the feet.',
+      correctAnswer: false,
+    ),
+    Question(
+      text: 'A slug\'s blood is green.',
+      correctAnswer: false,
+    ),
   ];
 
   int questionNumber = 0;
 
   answerQuestion(bool answer) {
-    final lastQuestionIndex = questions.length - 1;
+    final question = questions[questionNumber];
+    final answerIsCorrect = question.answerQuestion(answer);
+
     setState(() {
-      if (questionNumber < lastQuestionIndex) {
+      if (questionNumber < questions.length - 1) {
         questionNumber++;
       }
 
@@ -47,8 +59,8 @@ class _HomePageState extends State<HomePage> {
         scoreKeeper = [
           ...scoreKeeper,
           Icon(
-            answer ? Icons.check : Icons.close,
-            color: answer ? Colors.green : Colors.red,
+            answerIsCorrect ? Icons.check : Icons.close,
+            color: answerIsCorrect ? Colors.green : Colors.red,
           ),
         ];
       }
@@ -84,7 +96,7 @@ class _HomePageState extends State<HomePage> {
           Expanded(
             child: Center(
               child: Text(
-                questions[questionNumber],
+                questions[questionNumber].text,
                 textAlign: TextAlign.center,
                 style: const TextStyle(
                   fontSize: 24,
