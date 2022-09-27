@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:quizzler/modules/quiz/page.dart';
+import 'package:quizzler/modules/home/page.dart';
 
 void main() => runApp(const App());
 
@@ -8,13 +8,9 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        backgroundColor: Colors.grey.shade900,
-        body: const SafeArea(
-          child: QuizPage(),
-        ),
-      ),
+    return const MaterialApp(
+      title: 'Quizzler',
+      home: HomePage(),
     );
   }
 }

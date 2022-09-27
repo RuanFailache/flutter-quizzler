@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:quickalert/quickalert.dart';
 import 'package:quizzler/modules/quiz/controller.dart';
 import 'package:quizzler/shared/components/button.dart';
+import 'package:quizzler/shared/components/page_template.dart';
 
 final _quizController = QuizController();
 
@@ -53,8 +54,7 @@ class _QuizPageState extends State<QuizPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(10),
+    return PageTemplate(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
