@@ -17,4 +17,8 @@ class QuizController {
       _questionNumber++;
     }
   }
+
+  void restart() {
+    _questionNumber = 0;
+  }
 }

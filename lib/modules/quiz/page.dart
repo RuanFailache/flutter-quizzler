@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quickalert/quickalert.dart';
 import 'package:quizzler/modules/quiz/controller.dart';
 import 'package:quizzler/shared/components/button.dart';
 
@@ -8,7 +9,7 @@ class QuizPage extends StatefulWidget {
   const QuizPage({Key? key}) : super(key: key);
 
   @override
-  State<QuizPage> createState() => _QuizPageState();
+  createState() => _QuizPageState();
 }
 
 class _QuizPageState extends State<QuizPage> {
@@ -30,24 +31,24 @@ class _QuizPageState extends State<QuizPage> {
       }
       _quizController.goToNextQuestion();
     });
-  }
 
-  buildHeader() {
-    if (scoreKeeper.isEmpty) {
-      return const Text(
-        'Answer a question to appear here the results',
-        textAlign: TextAlign.center,
-        style: TextStyle(
-          fontSize: 14,
-          color: Colors.white,
-        ),
-      );
+    if (scoreKeeper.length == _quizController.totalOfQuestions) {
+      QuickAlert.show(
+        context: context,
+        type: QuickAlertType.success,
+        title: 'Congratulations!',
+        text: 'You completed the quiz.',
+        titleColor: Colors.white,
+        textColor: Colors.white,
+        confirmBtnColor: Colors.green,
+        backgroundColor: Colors.grey.shade900,
+      ).whenComplete(() {
+        setState(() {
+          scoreKeeper = [];
+          _quizController.restart();
+        });
+      });
     }
-
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: scoreKeeper,
-    );
   }
 
   @override
@@ -57,7 +58,19 @@ class _QuizPageState extends State<QuizPage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          buildHeader(),
+          scoreKeeper.isEmpty
+              ? const Text(
+                  'Answer a question to appear here the results',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.white,
+                  ),
+                )
+              : Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: scoreKeeper,
+                ),
           Expanded(
             child: Center(
               child: Text(
