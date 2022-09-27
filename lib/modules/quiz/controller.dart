@@ -3,6 +3,10 @@ import 'package:quizzler/shared/data/quiz.dart';
 final _quizData = QuizData();
 
 class QuizController {
+  QuizController() {
+    _quizData.randomizeQuestions();
+  }
+
   int _questionNumber = 0;
 
   get totalOfQuestions => _quizData.questions.length;
@@ -20,5 +24,6 @@ class QuizController {
 
   void restart() {
     _questionNumber = 0;
+    _quizData.randomizeQuestions();
   }
 }
